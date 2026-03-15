@@ -68,6 +68,7 @@ Arquitetura do Sistema
 
 Arquitetura baseada em camadas separadas:
 
+<<<<<<< HEAD
 Frontend
    |
    v
@@ -78,6 +79,9 @@ Serviços de Aplicação
    |
    v
 Banco de Dados
+=======
+Frontend | v API Gateway / Backend | v Serviços de Aplicação | v Banco de Dados
+>>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
 
 Stack sugerida:
 
@@ -107,6 +111,7 @@ Docker
 
 AWS / Vercel / Railway
 
+<<<<<<< HEAD
 Estrutura do Projeto
 condoclub
 │
@@ -129,11 +134,15 @@ condoclub
 │
 └── README.md
 Banco de Dados
+=======
+Estrutura do Projeto condoclub │ ├── backend │ ├── controllers │ ├── routes │ ├── services │ ├── middleware │ ├── models │ └── server.js │ ├── frontend │ ├── components │ ├── pages │ ├── services │ └── styles │ ├── database │ └── schema.sql │ └── README.md Banco de Dados
+>>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
 
 Modelo relacional.
 
 Principais entidades:
 
+<<<<<<< HEAD
 Users
 Condos
 Suppliers
@@ -148,6 +157,9 @@ password
 role
 condo_id
 created_at
+=======
+Users Condos Suppliers Products Orders Order_Items Tabela Users id name email password role condo_id created_at
+>>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
 
 roles possíveis
 
@@ -157,6 +169,7 @@ supplier
 
 admin
 
+<<<<<<< HEAD
 Tabela Condos
 id
 name
@@ -199,11 +212,19 @@ product_id
 quantity
 price
 API
+=======
+Tabela Condos id name address city state created_at Tabela Suppliers id name description contact_email phone created_at Tabela Products id supplier_id name description price stock created_at Tabela Orders id user_id status total_price created_at
+
+status possíveis
+
+pending paid delivered cancelled Tabela Order_Items id order_id product_id quantity price API
+>>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
 
 API REST.
 
 Base URL:
 
+<<<<<<< HEAD
 /api
 Auth
 POST
@@ -252,6 +273,37 @@ Criar pedido.
 
 GET
 /api/orders/:id
+=======
+/api Auth POST /api/auth/register
+
+Body:
+
+{ "name": "Leonardo", "email": "leo@email.com", "password": "123456" } POST /api/auth/login
+
+Retorna:
+
+token JWT Usuários GET /api/users
+
+Lista usuários.
+
+GET /api/users/:id
+
+Retorna usuário específico.
+
+Produtos GET /api/products
+
+Lista produtos.
+
+POST /api/products
+
+Criar produto.
+
+Pedidos POST /api/orders
+
+Criar pedido.
+
+GET /api/orders/:id
+>>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
 
 Detalhes do pedido.
 
@@ -285,8 +337,12 @@ middleware de autorização
 
 controle de acesso por role
 
+<<<<<<< HEAD
 Roadmap do Produto
 Fase 1 — MVP
+=======
+Roadmap do Produto Fase 1 — MVP
+>>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
 
 cadastro de usuários
 
@@ -334,6 +390,7 @@ R$99 / mês
 
 3 Destaque de ofertas
 
+<<<<<<< HEAD
 boost de visibilidade
 Instalação
 
@@ -349,11 +406,23 @@ cd frontend
 npm install
 npm start
 Contribuição
+=======
+boost de visibilidade Instalação
+
+Backend
+
+cd backend npm install npm run dev
+
+Frontend
+
+cd frontend npm install npm start Contribuição
+>>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
 
 Pull requests são bem-vindos.
 
 Fluxo recomendado:
 
+<<<<<<< HEAD
 feature branch
 pull request
 code review
@@ -361,3 +430,8 @@ merge
 Licença
 
 MIT License.
+=======
+feature branch pull request code review merge Licença
+
+MIT License.
+>>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
