@@ -434,4 +434,4 @@ MIT License.
 feature branch pull request code review merge Licença
 
 MIT License.
->>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
+>>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3 MIT License
