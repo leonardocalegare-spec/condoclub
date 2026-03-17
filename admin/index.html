@@ -141,11 +141,11 @@
   <nav class="sidebar">
     <div class="sidebar-logo">Condo<span>Club</span> <span style="font-size:.65rem;opacity:.5;font-weight:400">Admin</span></div>
     <div class="sidebar-nav">
-      <div class="nav-item active" onclick="navigate('dashboard')"><span class="nav-icon">📊</span> Dashboard</div>
-      <div class="nav-item" onclick="navigate('condos')"><span class="nav-icon">🏢</span> Condomínios</div>
-      <div class="nav-item" onclick="navigate('suppliers')"><span class="nav-icon">🏪</span> Fornecedores</div>
-      <div class="nav-item" onclick="navigate('orders')"><span class="nav-icon">📦</span> Pedidos</div>
-      <div class="nav-item" onclick="navigate('commissions')"><span class="nav-icon">💰</span> Comissões</div>
+      <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')"><span class="nav-icon">📊</span> Dashboard</div>
+      <div class="nav-item" data-page="condos" onclick="navigate('condos')"><span class="nav-icon">🏢</span> Condomínios</div>
+      <div class="nav-item" data-page="suppliers" onclick="navigate('suppliers')"><span class="nav-icon">🏪</span> Fornecedores</div>
+      <div class="nav-item" data-page="orders" onclick="navigate('orders')"><span class="nav-icon">📦</span> Pedidos</div>
+      <div class="nav-item" data-page="commissions" onclick="navigate('commissions')"><span class="nav-icon">💰</span> Comissões</div>
     </div>
     <div class="sidebar-footer">
       <button class="btn-logout" onclick="doLogout()">🚪 Sair</button>
@@ -252,11 +252,10 @@ function navigate(page) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
   const pageEl = document.getElementById(`page-${page}`);
-  const navEls = document.querySelectorAll('.nav-item');
-  const navMap = { dashboard: 0, condos: 1, suppliers: 2, orders: 3, commissions: 4 };
+  const activeNav = document.querySelector(`.nav-item[data-page="${page}"]`);
 
   if (pageEl) pageEl.classList.add('active');
-  navEls[navMap[page]]?.classList.add('active');
+  if (activeNav) activeNav.classList.add('active');
 
   currentPage = page;
   loadPage(page);

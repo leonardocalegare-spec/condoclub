@@ -65,7 +65,7 @@ export default function DashboardPage() {
   }, [user, isAdmin])
 
   const totalOrders = adminStats
-    ? Object.values(adminStats.orders || {}).reduce((s, v) => s + v, 0)
+    ? Object.values(adminStats.orders || {}).reduce((sum, count) => sum + count, 0)
     : 0
 
   return (

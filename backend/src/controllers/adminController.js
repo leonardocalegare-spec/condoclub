@@ -57,8 +57,10 @@ async function getCommissionReport(req, res) {
 }
 
 async function getPlatformRevenue(req, res) {
+  const MONTHS_IN_REPORT = 12;
   const now = new Date();
-  const twelveMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 11, 1);
+  // Subtract 11 so that together with the current month we get exactly 12 months
+  const twelveMonthsAgo = new Date(now.getFullYear(), now.getMonth() - (MONTHS_IN_REPORT - 1), 1);
 
   const orders = await prisma.order.findMany({
     where: {
