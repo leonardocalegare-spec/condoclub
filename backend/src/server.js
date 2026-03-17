@@ -11,6 +11,7 @@ const condoRoutes = require('./routes/condoRoutes');
 const supplierRoutes = require('./routes/supplierRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -44,6 +45,7 @@ app.use('/api/condos', apiLimiter, condoRoutes);
 app.use('/api/suppliers', apiLimiter, supplierRoutes);
 app.use('/api/services', apiLimiter, serviceRoutes);
 app.use('/api/orders', apiLimiter, orderRoutes);
+app.use('/api/admin', apiLimiter, adminRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', env: process.env.NODE_ENV }));
 
