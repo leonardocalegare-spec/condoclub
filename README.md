@@ -1,437 +1,132 @@
-CondoClub
+# CondoClub
 
-Plataforma de clube de compras privado para moradores de condomínios, conectando residentes a fornecedores locais com ofertas exclusivas e entregas programadas.
+Marketplace SaaS que conecta condomínios, moradores e empresas parceiras. Moradores contratam serviços pela plataforma e o CondoClub recebe comissão sobre as transações.
 
-O objetivo do CondoClub é centralizar demanda de moradores e gerar descontos coletivos, criando valor tanto para consumidores quanto para fornecedores.
+## Arquitetura
 
-Visão do Produto
+```
+┌─────────────┐     ┌──────────────────┐     ┌────────────────┐
+│  Frontend   │────▶│  Backend (API)   │────▶│  PostgreSQL    │
+│  React/Vite │     │  Node.js/Express │     │  (Prisma ORM)  │
+└─────────────┘     └──────────────────┘     └────────────────┘
+                             │
+                    JWT Auth + bcrypt
+```
 
-Problema:
+### Atores
+| Role | Descrição |
+|------|-----------|
+| `platform_admin` | Administradores da plataforma CondoClub |
+| `condo_manager` | Síndico/administrador do condomínio |
+| `resident` | Morador do condomínio |
+| `supplier` | Empresa parceira / prestador de serviço |
 
-Moradores de condomínio compram produtos e serviços de forma isolada, sem aproveitar o poder de compra coletivo.
+## Stack Tecnológica
 
-Solução:
+**Backend**
+- Node.js + Express
+- Prisma ORM
+- PostgreSQL
+- JWT + bcrypt
 
-O CondoClub cria um marketplace privado por condomínio, onde moradores podem:
+**Frontend**
+- React 18 + Vite
+- React Router v6
+- Axios
 
-acessar ofertas exclusivas
+## Estrutura do Projeto
 
-comprar coletivamente
-
-agendar entregas no condomínio
-
-contratar serviços locais
-
-Fornecedores ganham:
-
-acesso direto a dezenas ou centenas de clientes
-
-redução de custo de aquisição
-
-vendas recorrentes
-
-Principais Funcionalidades (MVP)
-
-Moradores
-
-cadastro e login
-
-associação ao condomínio
-
-visualização de ofertas
-
-compra de produtos
-
-acompanhamento de pedidos
-
-Fornecedores
-
-cadastro de loja
-
-publicação de ofertas
-
-gestão de pedidos
-
-histórico de vendas
-
-Admin
-
-gestão de usuários
-
-gestão de condomínios
-
-aprovação de fornecedores
-
-análise de vendas
-
-Arquitetura do Sistema
-
-Arquitetura baseada em camadas separadas:
-
-<<<<<<< HEAD
-Frontend
-   |
-   v
-API Gateway / Backend
-   |
-   v
-Serviços de Aplicação
-   |
-   v
-Banco de Dados
-=======
-Frontend | v API Gateway / Backend | v Serviços de Aplicação | v Banco de Dados
->>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
-
-Stack sugerida:
-
-Frontend
-
-React / Next.js
-
-TailwindCSS
-
-Axios
-
-Backend
-
-Node.js
-
-Express
-
-JWT authentication
-
-Banco de dados
-
-PostgreSQL
-
-Infraestrutura
-
-Docker
-
-AWS / Vercel / Railway
-
-<<<<<<< HEAD
-Estrutura do Projeto
-condoclub
-│
-├── backend
-│   ├── controllers
-│   ├── routes
-│   ├── services
-│   ├── middleware
-│   ├── models
-│   └── server.js
-│
-├── frontend
-│   ├── components
-│   ├── pages
-│   ├── services
-│   └── styles
-│
-├── database
-│   └── schema.sql
-│
+```
+condoclub/
+├── backend/
+│   ├── prisma/
+│   │   └── schema.prisma
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── lib/
+│   │   └── server.js
+│   ├── .env.example
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── index.html
+│   └── package.json
+├── tests/
+│   └── backend/
+├── docs/
+│   └── ARCHITECTURE.md
+├── docker-compose.yml
 └── README.md
-Banco de Dados
-=======
-Estrutura do Projeto condoclub │ ├── backend │ ├── controllers │ ├── routes │ ├── services │ ├── middleware │ ├── models │ └── server.js │ ├── frontend │ ├── components │ ├── pages │ ├── services │ └── styles │ ├── database │ └── schema.sql │ └── README.md Banco de Dados
->>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
+```
 
-Modelo relacional.
+## Como Executar
 
-Principais entidades:
+### Pré-requisitos
+- Node.js 20+
+- PostgreSQL 16+ (ou Docker)
 
-<<<<<<< HEAD
-Users
-Condos
-Suppliers
-Products
-Orders
-Order_Items
-Tabela Users
-id
-name
-email
-password
-role
-condo_id
-created_at
-=======
-Users Condos Suppliers Products Orders Order_Items Tabela Users id name email password role condo_id created_at
->>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
+### Com Docker
 
-roles possíveis
+```bash
+docker-compose up -d
+```
 
-resident
+### Manualmente
 
-supplier
+**Banco de dados:**
+```bash
+# Crie um banco PostgreSQL chamado condoclub
+```
 
-admin
-
-<<<<<<< HEAD
-Tabela Condos
-id
-name
-address
-city
-state
-created_at
-Tabela Suppliers
-id
-name
-description
-contact_email
-phone
-created_at
-Tabela Products
-id
-supplier_id
-name
-description
-price
-stock
-created_at
-Tabela Orders
-id
-user_id
-status
-total_price
-created_at
-
-status possíveis
-
-pending
-paid
-delivered
-cancelled
-Tabela Order_Items
-id
-order_id
-product_id
-quantity
-price
-API
-=======
-Tabela Condos id name address city state created_at Tabela Suppliers id name description contact_email phone created_at Tabela Products id supplier_id name description price stock created_at Tabela Orders id user_id status total_price created_at
-
-status possíveis
-
-pending paid delivered cancelled Tabela Order_Items id order_id product_id quantity price API
->>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
-
-API REST.
-
-Base URL:
-
-<<<<<<< HEAD
-/api
-Auth
-POST
-/api/auth/register
-
-Body:
-
-{
-"name": "Leonardo",
-"email": "leo@email.com",
-"password": "123456"
-}
-POST
-/api/auth/login
-
-Retorna:
-
-token JWT
-Usuários
-GET
-/api/users
-
-Lista usuários.
-
-GET
-/api/users/:id
-
-Retorna usuário específico.
-
-Produtos
-GET
-/api/products
-
-Lista produtos.
-
-POST
-/api/products
-
-Criar produto.
-
-Pedidos
-POST
-/api/orders
-
-Criar pedido.
-
-GET
-/api/orders/:id
-=======
-/api Auth POST /api/auth/register
-
-Body:
-
-{ "name": "Leonardo", "email": "leo@email.com", "password": "123456" } POST /api/auth/login
-
-Retorna:
-
-token JWT Usuários GET /api/users
-
-Lista usuários.
-
-GET /api/users/:id
-
-Retorna usuário específico.
-
-Produtos GET /api/products
-
-Lista produtos.
-
-POST /api/products
-
-Criar produto.
-
-Pedidos POST /api/orders
-
-Criar pedido.
-
-GET /api/orders/:id
->>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
-
-Detalhes do pedido.
-
-Fluxo de Compra
-
-Usuário cria conta
-
-Usuário entra no condomínio
-
-Usuário visualiza ofertas
-
-Usuário adiciona produtos ao carrinho
-
-Usuário finaliza pedido
-
-Fornecedor recebe pedido
-
-Entrega é feita no condomínio
-
-Segurança
-
-Medidas implementadas:
-
-autenticação JWT
-
-hash de senha com bcrypt
-
-validação de dados
-
-middleware de autorização
-
-controle de acesso por role
-
-<<<<<<< HEAD
-Roadmap do Produto
-Fase 1 — MVP
-=======
-Roadmap do Produto Fase 1 — MVP
->>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
-
-cadastro de usuários
-
-cadastro de fornecedores
-
-listagem de produtos
-
-sistema de pedidos
-
-painel admin básico
-
-Fase 2 — Escala
-
-pagamentos integrados
-
-logística de entrega
-
-notificações
-
-sistema de avaliação
-
-Fase 3 — Plataforma
-
-aplicativo mobile
-
-IA para recomendação de ofertas
-
-integração com síndicos
-
-compras coletivas automáticas
-
-Modelo de Monetização
-
-Possíveis fontes de receita:
-
-1 Comissão sobre vendas
-
-exemplo
-
-10% por pedido
-
-2 Assinatura do fornecedor
-
-R$99 / mês
-
-3 Destaque de ofertas
-
-<<<<<<< HEAD
-boost de visibilidade
-Instalação
-
-Backend
-
+**Backend:**
+```bash
 cd backend
+cp .env.example .env
+# Edite .env com suas credenciais
 npm install
+npx prisma migrate dev
 npm run dev
+```
 
-Frontend
-
+**Frontend:**
+```bash
 cd frontend
 npm install
-npm start
-Contribuição
-=======
-boost de visibilidade Instalação
+npm run dev
+```
 
-Backend
+## API
 
-cd backend npm install npm run dev
+Base URL: `http://localhost:3001/api`
 
-Frontend
+| Método | Rota | Auth | Descrição |
+|--------|------|------|-----------|
+| POST | /auth/register | — | Cadastro de usuário |
+| POST | /auth/login | — | Login |
+| GET | /auth/me | JWT | Perfil do usuário |
+| GET | /users | admin | Listar usuários |
+| GET/PUT | /users/:id | JWT | Obter/atualizar usuário |
+| POST/GET | /condos | admin/JWT | Criar/listar condomínios |
+| GET/PUT | /condos/:id | JWT | Obter/atualizar condomínio |
+| POST/GET | /suppliers | admin/JWT | Criar/listar fornecedores |
+| POST/GET | /services | JWT | Criar/listar serviços |
+| POST/GET | /orders | JWT | Criar/listar pedidos |
+| GET | /orders/:id | JWT | Detalhes do pedido |
+| PATCH | /orders/:id/status | JWT | Atualizar status |
 
-cd frontend npm install npm start Contribuição
->>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
+## Modelo de Negócio
 
-Pull requests são bem-vindos.
+O CondoClub retém uma comissão sobre cada pedido realizado na plataforma. A taxa de comissão é configurável por fornecedor (`commissionRate`, padrão 10%).
 
-Fluxo recomendado:
+## Licença
 
-<<<<<<< HEAD
-feature branch
-pull request
-code review
-merge
-Licença
-
-MIT License.
-=======
-feature branch pull request code review merge Licença
-
-MIT License.
->>>>>>> 0837bbae26eacb5747d5dc7c4f9440f9d71b60f3
+MIT
