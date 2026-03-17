@@ -53,7 +53,7 @@ export default function ServicesPage() {
   const [category, setCategory] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [hiring, setHiring] = useState(null)
+  const [hiringServiceId, setHiringServiceId] = useState(null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -77,8 +77,8 @@ export default function ServicesPage() {
   }, [search, category])
 
   async function handleHire(service) {
-    if (hiring) return
-    setHiring(service.id)
+    if (hiringServiceId) return
+    setHiringServiceId(service.id)
     setError('')
     try {
       const res = await api.post('/orders', {
@@ -88,7 +88,7 @@ export default function ServicesPage() {
     } catch (err) {
       setError(err.response?.data?.error || 'Erro ao criar pedido. Tente novamente.')
     } finally {
-      setHiring(null)
+      setHiringServiceId(null)
     }
   }
 
