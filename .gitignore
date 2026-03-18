@@ -1,6 +1,35 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database
+prisma/dev.db
+prisma/*.db
+
+# Test coverage
+coverage/
+
+# Python
 venv/
 __pycache__/
 *.pyc
-.env
-node_modules/
 *.zip
+
+# IDE
+.vscode/
+.idea/

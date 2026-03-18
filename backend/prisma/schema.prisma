@@ -1,0 +1,168 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PLATFORM_ADMIN
+  CONDO_MANAGER
+  RESIDENT
+  SUPPLIER
+}
+
+enum ServiceCategory {
+  VEHICLE_WASH
+  CLEANING
+  MAINTENANCE
+  DELIVERY
+  INSURANCE
+  HOME_SERVICES
+  GYM
+  INTERNET
+  COURSES
+  OTHER
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum CommissionStatus {
+  PENDING
+  PAID
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role
+  condoId      String?
+  supplierId   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  condo    Condo?    @relation(fields: [condoId], references: [id])
+  supplier Supplier? @relation(fields: [supplierId], references: [id])
+  orders   Order[]
+
+  @@index([email])
+  @@index([role])
+  @@index([condoId])
+  @@index([supplierId])
+}
+
+model Condo {
+  id        String   @id @default(uuid())
+  name      String
+  address   String
+  city      String
+  state     String
+  zipCode   String
+  phone     String?
+  email     String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users User[]
+}
+
+model Supplier {
+  id             String   @id @default(uuid())
+  name           String
+  description    String?
+  contactEmail   String
+  phone          String?
+  website        String?
+  active         Boolean  @default(true)
+  commissionRate Decimal  @default(0.10) @db.Decimal(5, 4)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  users       User[]
+  services    Service[]
+  commissions Commission[]
+}
+
+model Service {
+  id          String          @id @default(uuid())
+  supplierId  String
+  name        String
+  description String?
+  price       Decimal         @db.Decimal(10, 2)
+  category    ServiceCategory
+  imageUrl    String?
+  active      Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  supplier   Supplier    @relation(fields: [supplierId], references: [id])
+  orderItems OrderItem[]
+
+  @@index([supplierId])
+  @@index([category])
+}
+
+model Order {
+  id               String      @id @default(uuid())
+  userId           String
+  status           OrderStatus @default(PENDING)
+  totalAmount      Decimal     @db.Decimal(10, 2)
+  commissionAmount Decimal     @db.Decimal(10, 2)
+  supplierAmount   Decimal     @db.Decimal(10, 2)
+  paymentMethod    String?
+  notes            String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  user       User        @relation(fields: [userId], references: [id])
+  items      OrderItem[]
+  commission Commission?
+
+  @@index([userId])
+  @@index([status])
+}
+
+model OrderItem {
+  id         String  @id @default(uuid())
+  orderId    String
+  serviceId  String
+  quantity   Int     @default(1)
+  unitPrice  Decimal @db.Decimal(10, 2)
+  totalPrice Decimal @db.Decimal(10, 2)
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
+
+  @@index([orderId])
+  @@index([serviceId])
+}
+
+model Commission {
+  id         String           @id @default(uuid())
+  orderId    String           @unique
+  supplierId String
+  amount     Decimal          @db.Decimal(10, 2)
+  rate       Decimal          @db.Decimal(5, 4)
+  status     CommissionStatus @default(PENDING)
+  paidAt     DateTime?
+  createdAt  DateTime         @default(now())
+
+  order    Order    @relation(fields: [orderId], references: [id])
+  supplier Supplier @relation(fields: [supplierId], references: [id])
+
+  @@index([supplierId])
+  @@index([status])
+}
